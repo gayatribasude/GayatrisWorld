@@ -1,0 +1,115 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+    <link href="{% static 'bootstrap.min.css' %}" rel="stylesheet" type="text/css"/>
+     <link href="{% static 'font-awesome.min.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'main.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'util.css' %}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" type="text/css">
+
+
+
+
+
+
+</head>
+<body class="animation">
+{% include 'nav.html' with brandname="Gayatri's World"%}
+{% block content %}
+
+
+{% endblock %}
+    <script
+  src="https://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>
+
+
+   <!-- <script src='{% static "jquery-3.3.1.slim.min.js" %}' integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+    <script>window.jQuery || document.write('<script src="{% static 'jquery-3.3.1.slim.min.js' %}"><\/script>')</script>
+    <script src="{% static 'popper.min.js' %}"></script>
+    <script src="{% static 'bootstrap.min.js' %}"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
+
+    <script>
+
+
+		$('.carousel').carousel({
+  				interval: 2000
+		})
+/*
+        $(document).ready(function () {
+
+
+            //form-search: class name
+            var searchForm=$(".form-search")
+            var searchInput=searchForm.find("[name='q']")
+            var typingTimer;
+            var typingInterval= 1000
+            searchInput.keyup(function (event) {
+               clearTimeout(typingTimer)
+                typingTimer=setTimeout(performSearch,typingInterval)
+
+            })
+            searchInput.keydown(function (event) {
+               clearTimeout(typingTimer)
+
+            })
+            function performSearch() {
+                 var query=searchInput.val()
+                 window.location.href='search//?q=',query
+
+            }*/
+
+             var productForm =$(".form-product-ajax")
+
+            productForm.submit(function (event) {
+                event.preventDefault();
+                console.log("form is not moving")
+                var thisForm=$(this)
+
+                var actionEndpoint=thisForm.attr('action');
+                var httpMethod=thisForm.attr('method');
+                var formData=thisForm.serialize();
+
+                $.ajax({
+                    url:actionEndpoint,
+                    method:httpMethod,
+                    data:formData,
+                    success:function(data) {
+                        var submitSpan = thisForm.find(".submit-span")
+                        if(data.added) {
+                            submitSpan.html("In cart <button type=\"submit\">Remove ?</button>")
+                            submitSpan.onsubmit(alert("added"))
+                        }
+                        else {
+                            submitSpan.html('Add to cart <button type="submit">Add ?</button>')
+                            submitSpan.onsubmit(alert("Removed"))
+                        }
+
+                        var navCount =$(".nav-count")
+                        navCount.text(data.cartCount)},
+
+
+                    error:function(errorData) {
+                        console.log("error",errorData)
+                    }
+
+
+                })
+            })
+
+    </script>
+
+
+{% block javascript %}
+{% endblock %}
+
+</body>
+</html>

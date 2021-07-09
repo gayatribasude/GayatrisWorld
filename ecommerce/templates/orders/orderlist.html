@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="display-4">Orders</div>
+        </div>
+    </div>
+    <div class="row text-black">
+        <div class="col-sm-1">ID</div>
+        <div class="col-sm-1">Billing Profile</div>
+         <div class="col-sm-2">Final Total</div>
+         <div class="col-sm-2">Confirm?</div>
+        <div class="col-sm-2">Status</div>
+    </div>
+     {% for i in order %}
+    <div class="row">
+
+
+         <div class="col-sm-1">{{i.id}}</div>
+        <div class="col-sm-1"> {{i.billing_profile}}</div>
+         <div class="col-sm-2">{{i.finaltotal}}</div>
+         <div class="col-sm-2"> {{i.confirm}}</div>
+        <div class="col-sm-2">{{i.status}}</div>
+        <div class="col-sm-2">
+            <a class="btn btn-dark" href="{% url 'orderdetails' i.pk %}">View</a>
+        </div>
+        <div class="col-sm-2">
+            <a class="btn btn-dark" href="{% url 'updateorder' i.pk %}">Update</a>
+        </div>
+    </div>
+     <hr style="border:3px solid #636363"/>
+    {% endfor %}
+
+</div>
+
+{% endblock %}

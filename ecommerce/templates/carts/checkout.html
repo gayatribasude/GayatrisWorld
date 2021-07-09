@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="row">
+    <div class="col-sm-12">
+        {% if messages %}
+        <div class="alert alert-success">
+  <strong>Success!</strong>{{messages}}
+        </div>
+{% endif %}
+    </div>
+
+
+        <div class="col-sm-12">
+             <h1 align="center">Checkout</h1>
+        </div>
+</div>
+    {% if not billingprofile %}
+       <!-- <div class="row text-center">
+            <div class="col-12 col-md-6">
+                <a class="lead">Login</a>
+                    {% include 'snippet_login.html' with form=form next=request.build_absolute_uri  %}
+
+            </div> -->
+<div class="row justify-content-center">
+            <div class="col-4">
+                Just enter your valid gmail address to place an order.
+                <hr>
+                <form method="POST" action="{% url 'visitor_view' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{next}}">
+
+                    {{visitor_form}}
+                    {{ visitor_form.errors }}
+                    {{ visitor_form.non_field_errors }}
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </form>
+
+            </div>
+
+
+</div>
+
+    {% else %}
+        {% if not object.shipping_address %}
+
+         <div class='row'>
+            <div class='col-sm-12'>
+                <p class='display-4' align="center">Shipping Address</p>
+                <hr/>
+            </div>
+            <div class='col-6'>
+                {% url "add_address" as add_address %}
+                {% include 'snippet_address.html' with form=address_form next_url=request.build_absolute_uri action_url=add_address address_type='shipping' %}'
+
+             </div>
+             <div class='col-6'>
+                {% url "use_address" as use_address %}
+                {% include 'address_list_radio.html' with address_list=address_list next_url=request.build_absolute_uri action_url=use_address address_type='shipping' %}
+
+             </div>
+         </div>
+          {% elif not object.billing_address %}
+        <div class='row'>
+            <div class='col-sm-12'>
+                 <p class='display-4' align="center">Billing Address</p>
+                <hr/>
+            </div>
+            <div class='col-6'>
+
+            {% url "add_address" as add_address %}
+            {% include 'snippet_address.html' with form=address_form next_url=request.build_absolute_uri action_url=add_address address_type='billing' %}
+            </div>
+            <div class='col-6'>
+                {% url "use_address" as use_address %}
+                {% include 'address_list_radio.html' with address_list=address_list next_url=request.build_absolute_uri action_url=use_address address_type='billing'  %}
+
+             </div>
+        </div>
+
+
+
+        {% elif object.shipping_address and object.billing_address and  not object.confirm %}
+<div class="container-fluid">
+<div class="row">
+<div class="col-sm-6 py-3 mx-auto">
+    <table class="table "><!-- table-borderless -->
+  <thead>
+    <tr>
+
+      <th scope="col">Product</th>
+      <th scope="col">Price</th>
+      <th scope="col">Quantity</th>
+        <th scope="col">Line Total(Rs.)</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for items in object.get_items %}
+    <tr>
+      <th scope="row">{{items.product.name}} </th>
+      <td>{{items.product.price}} </td>
+      <td> {{items.quantity}} </td>
+      <td>{{items.item_total}}</td>
+    </tr>
+  {% if not forloop.last %}, {% endif %}{% endfor %}
+  <tr>
+      <td colspan="2"></td>
+      <th scope="row">Cart Total: </th>
+      <td>{{ object.cart.finaltotal }}</td>
+  </tr>
+   <tr>
+      <td colspan="2"></td>
+      <th scope="row">Shipping Total: </th>
+      <td>{{ object.shipping_total }}</td>
+  </tr>
+  <tr>
+      <td colspan="2"></td>
+      <th scope="row">Order Total: </th>
+      <td>{{ object.finaltotal }}</td>
+  </tr>
+  </tbody>
+</table>
+    <h6>
+        <p>Email Address: {{object.billing_profile.email}}</p>
+             <p >Shipping Address: {{ object.shipping_address.get_address }}</p>
+                <p>Billing Address: {{ object.billing_address.get_address }}</p>
+
+            <form method="post" method="{% url 'checkout_success' %}">
+                {% csrf_token %}
+                <button  class="btn btn-success" type="submit"> Final Checkout</button>
+            </form>
+    </div>
+    </div>
+    </div>
+
+
+
+
+        {% endif %}
+{% endif %}
+
+{% endblock %}
+

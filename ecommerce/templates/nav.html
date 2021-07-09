@@ -1,0 +1,127 @@
+{% url 'home' as home %}
+{% url 'contact' as contact %}
+{% url 'productlist' as productlist %}
+{% url 'login' as login %}
+{% url 'logout' as logout %}
+{% url 'register' as register %}
+{% url 'createsuppler' as createsuppler %}
+{% url 'createproduct' as createproduct %}
+{% url 'cartshome' as cartshome %}
+{% url 'checkout_home' as checkout_home %}
+{% url 'account' as account %}
+{% url 'analysis' as analysis %}
+{% url 'analysis_view' as analysis_view %}
+
+<div class="container-fluid">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light rounded ">
+        <a class="navbar-brand" href="{{home}}">{{brandname}}</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExample09">
+          <ul class="navbar-nav mr-auto">
+            <li class="{% if request.path == home %} active {% endif %}">
+
+              <a class="nav-link" href="{{home}}">Home <span class="sr-only">(current)</span></a>
+            </li>
+
+            <li class="{% if request.path == analysis_view %} active {% endif %}">
+              <a class="nav-link" href="{{analysis_view}}">Trends</a>
+            </li>
+               <li class="nav-item {% if request.path == productlist %} active {% endif %}">
+              <a class="nav-link " href="{{productlist}}">Product</a>
+            </li>
+              <li class="nav-item {% if request.path == cartshome %} active {% endif %}">
+              <a class="nav-link " href="{{cartshome}}">Cart </a>
+            </li>
+               <li class="nav-item {% if request.path == checkout_home %} active {% endif %}">
+              <a class="nav-link " href="{{checkout_home}}">Checkout</a>
+
+           {% if request.user.is_authenticated %}
+
+              {% if request.user.is_admin %}
+              <li class="nav-item {% if request.path == analysis %} active {% endif %}">
+              <a class="nav-link " href="{{analysis}}">Analysis- Graphs</a>
+             </li>
+              {% endif %}
+
+
+            {% else %}
+              </li>
+              <li class="nav-item {% if request.path == contact %} active {% endif %}">
+              <a class="nav-link " href="{{contact}}">Contact</a>
+            </li>
+             <!-- </li>
+              <li class="nav-item {% if request.path == login %} active {% endif %}">
+              <a class="nav-link " href="{{login}}">Login</a>
+            </li>-->
+              {% endif %}
+
+
+
+
+
+              {% if request.user.is_authenticated %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="{% url 'account' %}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
+              <div class="dropdown-menu" aria-labelledby="dropdown09">
+                <a class="dropdown-item" href="{% url 'account' %}">Log- Settings</a>
+                <a class="dropdown-item" href="{% url 'createproduct' %}">Add Product</a>
+                  {% if request.user.is_admin %}
+                <a class="dropdown-item" href="{% url 'createsuppler' %}">Add Suppler</a>
+                  <a class="dropdown-item" href="{% url 'register' %}">Add Employee</a>
+                  {% endif %}
+
+
+              </div>
+            </li>
+               <li class="nav-item {% if request.path == logout %} active {% endif %}">
+              <a class="nav-link " href="{{logout}}">Log Out</a>
+            </li>
+              <li class="nav-item mr-auto"> &nbsp; &nbsp;&nbsp; &nbsp;current user: {{request.user}} &nbsp;</li>
+              {% if request.user.is_admin %}
+              Role: ADMIN
+              {% elif request.user.is_staff %}
+              Role: Staff
+              {% endif %}
+
+              {% endif %}
+
+
+
+
+
+
+          </ul>
+             <ul class="nav navbar-nav navbar-right">
+       <li >
+                    <i class="fa fa-shopping-cart fa-3x" aria-hidden="true" title="Edit"> <span class="nav-count">{% if request.session.cart_items > 0 %}{{request.session.cart_items}}{% endif %}</span></i>
+                </li>
+    </ul>
+
+
+
+        </div>
+      </nav>
+
+</div>
+
+<div class="container">
+    <form action="{% url 'searchproductlist' %}" class="form-search">
+  <div class="row">
+
+      <div class="col-lg-8 mr-6 ml-6 col-md-10 col-sm-10 col-9 py-3">
+      <input class="form-control" type="text" placeholder="Search Product Here" aria-label="Search" name="q" value="{{ request.GET.q}}">
+      </div>
+      <div class="col-lg-4  col-md-2 col-sm-2 col-3 py-3">
+           <button class="btn btn-outline-success " type="submit" >Search</button>
+      </div>
+
+      <div class="col-12">
+      <hr class="border-success">
+  </div>
+</div>
+        </form>
+
+</div>

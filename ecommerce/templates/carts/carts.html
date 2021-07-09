@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if cart.items.exists %}
+    <div class=”container”>
+        <div class="row">
+            <div class="col-12">
+                <div class="page-header">
+                    <h1 align="center">Your Shopping Cart </h1>
+                    <hr style="border:3px solid darkslategrey"/>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row cart-row">
+            <div class="col-3">
+
+            </div>
+            <div class="col-2">
+                Product Name
+            </div>
+            <div class="col-2">
+                Price/pre
+            </div>
+            <div class="col-1">
+                Quantity
+            </div>
+            <div class="col-2">
+                Total
+            </div>
+            <div class="col-2">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                {% for item in cart.items.all %}
+
+                <div class="row cart-row">
+                    <div class="col-3">
+                            {{forloop.counter}}
+                        {% if item.product.image %}
+                        <img style="width: 100%;height: 100%;border: #0b2e13" src="{{ item.product.image.url }}" alt="{{ item.product.title | escape }}" class="img-responsive">
+                        {% endif %}
+
+                    </div>
+                    <div class="col-2">
+                        <div class="row">
+                            <div class="col-12">
+                                <h3><a href="{% url 'productdetails' item.product.slug%}">{{ item.product.name}}</a></h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <h6>{{ item.product.description}}</h6>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="col-2">
+                        <h3 class="h3-price">
+                        Rs. {{ item.product.price  }}
+                        </h3>
+                    </div>
+                    <div class="col-1">
+                        <h3>
+                       {{ item.quantity }}
+                        </h3>
+                    </div>
+                    <div class="col-2">
+                        <h3>
+                            Rs. {{item.item_total}}
+                        </h3>
+                    </div>
+                    <div class="col-2">
+                        <form  method="POST" action="{% url 'updatecart' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="productid" value="{{item.product.id}}">
+                            <span class="submit-span">
+        {% if item in cart.items.all %}
+            <button type="submit">Remove ?</button>
+        {% else %}
+            Add to cart <button type="submit">Add ?</button>
+        {% endif %}
+    </span>
+
+                        </form>
+
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+    <hr style="border:2px solid darkgreen ">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-7">
+
+            </div>
+            <div class="col-3">
+                <div class="display-4">Total : {{cart.total}}</div>
+            </div>
+             <div class="col-1">
+            <a class="btn btn-success" href="{% url 'productlist' %}">Shop More</a>
+        </div>
+            <div class="col-1">
+                <a class="btn btn-success" href='{% url "checkout_home" %}'>Checkout</a>
+            </div>
+        </div>
+
+    </div>
+
+{% else %}
+    <div align="center">
+    <div class="display-3">Cart is Empty</div><i class="fa fa-shopping-cart" style="font-size:80px"></i>
+    <div class="display-6">Add some items into cart</div>
+    <a href="{% url 'productlist' %}">Shop from here</a>
+</div>
+
+{% endif %}
+{% endblock %}

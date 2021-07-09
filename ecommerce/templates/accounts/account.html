@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="text-md-center size2">{{request.user}}::{% if request.user.is_admin %}ADMIN{% elif request.user.is_staff %}STAFF{% endif %}</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <div class="card" >
+                <div class="card-body">
+                    <h5 class="card-title">Support</h5>
+                    <div class="list-group">
+                        <a class="list-group-item" href="{% url 'home' %}">About</a>
+                        <a class="list-group-item" href="{% url 'receivedcontacts' %}">Received Contact</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-4">
+            <div class="card" >
+                <div class="card-body">
+                    <h5 class="card-title">Orders</h5>
+                    <div class="list-group">
+                        <a class="list-group-item" href="{% url 'orderlist' %}">Orders</a>
+                         {% if request.user.is_admin %}
+                        <a class="list-group-item" href="{% url 'analysis' %}">Analysis</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-4">
+            <div class="card" >
+                <div class="card-body">
+                    <h5 class="card-title">Account Details</h5>
+                    <div class="list-group">
+                        <a class="list-group-item">Name: {{request.user.fullname}}</a>
+                        <a class="list-group-item" href="{% url 'password_change'%}">Reset Password</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card" >
+                <div class="card-body">
+                    <h5 class="card-title">WORK</h5>
+                    <div class="list-group">
+                        <a class="list-group-item" href="{% url 'createproduct' %}">Add Product</a>
+                        <a class="list-group-item" href="{% url 'productlist' %}">Update Product</a>
+                        {% if request.user.is_admin %}
+                        <a class="list-group-item" href="{% url 'createsuppler' %}">Add Suppler</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</div>
+{% endblock %}

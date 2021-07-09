@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="col-6 mx-auto">
+        <h2>
+           Thank You So much for visiting!
+            <form method="POST">
+                {% csrf_token %}
+               <button type="submit" class="btn btn-dark">Invoice</button>
+                <h3>Take print</h3>
+            </form>
+        </div>
+
+    </div>
+{% endblock %}

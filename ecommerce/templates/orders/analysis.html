@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+
+
+
+{% block javascript %}
+<script>
+    $(document).ready(function(){
+    function renderChart(id, data, labels){
+
+        var ctx = $('#' + id)
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Sales',
+                        data: data,
+                       backgroundColor: 'rgba(0, 158, 29, 0.45)',
+                        borderColor:'rgba(0, 158, 29, 1)',
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            scaleLabel:{
+                            display:true,
+                                labelString:'Amount'
+                            }}
+                            ],
+                        xAxes:[{
+                            scaleLabel:{
+                                display:true,
+                                labelString:'Week Days'
+                            }
+                        }]
+                    },
+                    backgroundColor: 'rgba(75, 192, 192, 1)'
+                }
+            });
+    }
+
+    function getSalesData(id, type){
+        var url = '/orders/sales/ajax'
+        var method = 'GET'
+        var data = {"type": type}
+        $.ajax({
+            url: url,
+            method: method,
+            data: data,
+            success: function(responseData){
+                renderChart(id, responseData.data, responseData.labels)
+            }, error: function(error){
+                $.alert("An error occurred")
+            }
+        })
+    }
+    var chartsToRender = $('.cfe-render-chart')
+    $.each(chartsToRender, function(index, html){
+        var $this = $(this)
+        if ( $this.attr('id') && $this.attr('data-type')){
+            getSalesData($this.attr('id'), $this.attr('data-type'))
+        }
+
+    })
+
+})
+</script>
+
+
+{% endblock %}
+
+
+
+{% block content %}
+<div class='row my-5'>
+    <div class='col-12'>
+        <h1 align="center">Sales Data</h1>
+    </div>
+    <div class="col-sm-12">
+        <h2 align="center">{{timezone}}</h2>
+    </div>
+</div>
+
+
+<hr/>
+
+<div class='row my-5'>
+ <!--   <div class='col-3'>
+        <h3>Today's sales</h3>
+        <hr/>
+        <p>Recent Total: Rs. {{ today.recent_data.finaltotal__sum |floatformat:"-3" }}</p>
+        <ul>
+        {% for order in today.recent|slice:":5" %}
+            <li class='my-3'>Order :{{order.id }}<br/>
+            Rs. {{ order.finaltotal }}<br/>
+            {{ order.updated|timesince }} ago</li>
+        {% endfor %}
+        </ul>
+    </div>-->
+    <div class="col-4">
+    <h3>This week's sales</h3>
+    <hr/>
+        <p>Recent Total: Rs. {{ this_week.recent_data.finaltotal__sum|floatformat:"-3" }}</p>
+        <ul>
+        {% for order in this_week.recent|slice:":5" %}
+            <li class='my-3'>Order: {{ order.id }}<br/>
+            Rs. {{ order.finaltotal }}<br/>
+            {{ order.updated|timesince }} ago</li>
+        {% endfor %}
+        </ul>
+    </div>
+
+    <div class="col-md-5" style="max-width: 500px;">
+       <canvas class='cfe-render-chart' id="thisWeekSales" data-type='week' width="400" height="400"></canvas>
+    </div>
+</div>
+
+
+
+<hr/>
+
+<div class='row my-5'>
+    <div class='col-12'>
+        <h1>Previous 4 weeks</h1>
+    </div>
+    <div class='col-4'>
+        <p>Orders Total: Rs.{{ last_four_weeks.recent_data.finaltotal__sum }}</p>
+        <p>Shipped Total: {% if last_four_weeks.shipped_data.finaltotal__sum %}Rs. {{ last_four_weeks.shipped_data.finaltotal__sum }} {% endif %}</p>
+        <p>Paid Totals: Rs. {{ last_four_weeks.paid_data.finaltotal__sum }}</p>
+
+    </div>
+     <div class="col-md-5" style="max-width: 500px;">
+       <canvas class='cfe-render-chart' id="fourWeekSales" data-type='4weeks' width="400" height="400"></canvas>
+    </div>
+</div>
+
+{% endblock %}

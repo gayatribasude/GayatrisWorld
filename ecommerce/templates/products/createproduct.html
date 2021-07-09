@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="row">
+<div class="col-sm-6 offset-sm-3">
+<div class="display-4" align="center">Add Product</div>
+    <form method="POST" enctype="multipart/form-data"  onsubmit="return myFunction();" >
+    {% csrf_token %}
+     {{form|crispy}}
+    <button type="submit">Save</button>
+</form>
+    <script>
+function myFunction() {
+  alert("Product added Successfully");
+}
+</script>
+</div>
+</div>
+{% endblock %}

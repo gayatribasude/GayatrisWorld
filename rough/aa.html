@@ -1,0 +1,19 @@
+<!--
+
+        {% if not object.billing_address %}
+        <div class='row'>
+            <div class='col-12'>
+                 <p class='lead'>Billing Address</p>
+                <hr/>
+            </div>
+            <div class='col-6'>
+
+            {% url "add_address" as add_address %}
+            {% include 'snippet_address.html' with form=address_form next_url=request.build_absolute_uri action_url=add_address address_type='billing' %}
+            </div>
+
+
+
+        </div> -->
+
+

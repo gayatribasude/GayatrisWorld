@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% block javascript %}
+<script>
+    var endpoint='/product/analysis/purchase'
+    var quantity=[]
+    var products=[]
+
+    $.ajax({
+        method:"GET",
+        url:endpoint,
+        success:function (data) {
+
+            products=data.product
+            quantity=data.quantity
+
+
+
+    var ctx = document.getElementById("myChart").getContext('2d');
+var myChart = new Chart(ctx, {
+    type:'horizontalBar',
+    data: {
+        labels: products,
+        datasets: [{
+            label: 'product sales',
+            data: quantity,
+            fillcolor:"(75,75,66,75",
+
+            backgroundColor: [
+
+
+            ],
+            borderColor: [
+
+
+            ],
+            borderWidth: 1
+        }]
+    },
+     options: {
+                    scales: {
+                        yAxes: [{
+                            scaleLabel:{
+                            display:true,
+                                labelString:'Product\'s ID'
+                            }}
+                            ],
+                        xAxes:[{
+                            scaleLabel:{
+                                display:true,
+                                labelString:'Number of Item got Sold'
+                            }
+                        }]
+                    },
+    }
+});
+
+
+
+
+
+
+        },
+        error:function (error_data) {
+            console.log(error_data)
+        }
+    });
+
+
+
+
+
+</script>
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>Products with Purchase count</h2>
+        </div>
+    </div>
+
+</div>
+<div class="chart-container" style="position: relative; height:40vh; width:80vw">
+    <canvas id="myChart"></canvas>
+</div>
+
+{% endblock %}

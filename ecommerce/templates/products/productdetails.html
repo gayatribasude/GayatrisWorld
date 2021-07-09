@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+
+
+
+
+
+
+<div class="container" id="product-section">
+  <div class="row">
+
+
+   <div class="col-md-6">
+    {% if product.image %}
+        <img src="{{product.image.url}}" class="img-fluid"> <br>
+    {% endif %}
+   </div>
+
+
+   <div class="col-md-6">
+       <div class="row">
+           <div class="col-md-12">
+               <h1>{{product.name}}</h1>
+               <span class="label label-primary">ProductId</span>
+               <span class="monospaced">: {{product.slug}}</span>
+               <div style="width: 300px" class="description">
+                {{product.description}}
+               </div>
+           </div>
+       </div>
+       <div class="row">
+           <div class="col-md-5 bottom-rule">
+               <h2 class="product-price">Rs. {{product.price}}</h2>
+
+           </div>
+
+
+
+       </div>
+       <div class="row">
+
+            <div class="col-md-5">
+
+               <h4><strike>Rs. {{product.double_price}}</strike></h4>
+           </div>
+
+       </div>
+       {% if product.quantity == 0 or product.quantity <= 2 %}
+       <div class="row">
+           <div class="col-sm-12">
+               <h4>Product is out of stock</h4>
+           </div>
+       </div>
+       {% else %}
+       <form class='form-product-ajax' method="POST" action="{% url 'updatecart' %}">
+               {% csrf_token %}
+       <div class="row">
+
+           <div class="col-md-12">
+
+                   Quantity:<input type="number" name="quantity" value="1" min="1">
+
+           </div>
+       </div>
+       <div class="row">
+           <div class="col-md-6 py-4">
+
+               <input type="hidden" name="productid" value="{{product.id}}">
+               <span class="submit-span">
+
+
+                    {% if product in cart.items.product %}
+                    In cart <button type="submit">Remove ?</button>
+                    {% else %}
+                    Add to cart <button  type="submit">Add ?</button>
+                    {% endif %}
+               </span>
+
+               {% if request.user.is_authenticated %}
+        <a class="btn btn-dark" href="{% url 'updateproduct' product.slug %}">Update</a>
+        {% endif %}
+
+           </div>
+       </div>
+       </form>
+       {% endif %}
+
+       <div class="row">
+        <div class="col-md-3">
+            <a class="btn btn-success" href="{% url 'productlist' %}">Shop More</a>
+        </div>
+           <div class="col-md-3">
+               <a class="btn btn-success" href="{% url 'cartshome' %}"> Check your Cart</a>
+           </div>
+    </div>
+       <div class="row">
+
+       </div>
+       <div class="row">
+        <div class="col-md-12 top-10">
+        <p>To order by telephone, <a href="tel:9130899800">please call 9130899800</a></p>
+    </div>
+
+ </div>
+
+   </div>
+  </div>
+
+</div>
+
+
+{% endblock %}

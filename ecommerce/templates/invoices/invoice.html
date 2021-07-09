@@ -1,0 +1,184 @@
+{% load static %}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <title >Invoice</title>
+       <link href="{% static 'bootstrap.min.css' %}" rel="stylesheet" type="text/css"/>
+
+        <style type="text/css">
+            .center_text{
+                text-align: center;
+            }
+            *{ background-color: #ffffff;
+                font-size: 15px;
+                }
+            h1,p{
+                margin: 0;
+                padding: 0;
+            }
+
+            .invoice-heading{
+                font-size: 35px;
+                color: #5b80b2;
+                text-decoration: overline;
+                text-decoration: underline;
+
+                font-family: "Times New Roman", Times, serif;
+
+
+
+            }
+
+            .logoname{
+                margin-top: 20px;
+                font-size: 30px;
+                color: green;
+                font-weight: bold;
+                border-bottom: 6px solid red;
+                background-color: lightgrey;
+            }
+            table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  padding: 2px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+
+            .left_justify{
+               text-align: left;
+            }
+
+
+        </style>
+    </head>
+    <body>
+    <div class="logoname">Gayatri's World&nbsp; &nbsp;<sub>Shopping website and management
+</sub></div>
+
+
+
+    <div>
+        <table>
+            <tr>
+                <td colspan="2">
+
+                    <address> Ramnarain Ruia College, Matunga.</address>
+                    <p>Contact No.: 9130899800</p>
+                    <p>Time: 11:00 to 15:00 , 17:00 to 22:00</p>
+                    <p> Sunday: Close</p>
+                </td>
+                <td>
+
+                    <p size="30px">Date:{{timestamp}}</p>
+                    <p>Order Id: {{order_id}}</p>
+                </td>
+            </tr>
+              <hr>
+            <tr>
+                <td>
+                    <h4>To:</h4>
+                    <p>Name: {{full_name}}</p>
+                    <p>Email: {{email}}</p>
+                    <p>User Id: {{billing_profile}}</p>
+                </td>
+
+                <td>
+                    <h4>Shipping Address:</h4>
+                    <address> {{shipping_address}}</address>
+                </td>
+                <td>
+                    <h4>Billing Address:</h4>
+                    <address> {{billing_address}}</address>
+                </td>
+            </tr>
+        </table>
+        <hr>
+        
+        <table align="right" class="center_text">
+            <tr>
+                <th>Product Code</th>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Price/Per</th>
+                <th>Line Total(Rs.)</th>
+            </tr>
+            {% for i in item %}
+            <tr>
+                <td>{{i.product.slug}}</td>
+                <td>{{i.product.name}}</td>
+                <td> {{i.quantity}}</td>
+                <td>{{i.product.price}}</td>
+                <td>{{i.item_total}}</td>
+
+            </tr>
+            {% endfor %}
+
+
+            <tr>
+                <td colspan="3"></td>
+                <td>Shipping Total:</td>
+                <td>{{shipping_total}}</td>
+            </tr>
+
+            <tr>
+                <td colspan="3"></td>
+                <td>Total:</td>
+                <td>{{finaltotal}}</td>
+            </tr>
+             <tr>
+                 <td colspan="3"></td>
+                 <td>GST 5 %:</td>
+                 <td>{{gst_rate}}</td>
+             </tr>
+            <tr>
+                <td colspan="3"></td>
+                <td>Bill Total: </td>
+                <td> {{with_gst_total}}</td>
+            </tr>
+        </table>
+        <hr>
+        <table>
+
+
+            <tr>
+                <td colspan="4">
+                    Thank you for your Business
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">Status: </td>
+                <td>{{status}}</td>
+            </tr>
+            <tr>
+                <td colspan="2">Cart Id:</td>
+                <td>{{cart}}</td>
+            </tr>
+
+            <tr>
+                <td colspan="2">Order Confirmed at:</td>
+                <td>{{updated}}</td>
+            </tr>
+        </table>
+        <hr>
+    </div>
+    <table>
+        <tr>
+            <td style="text-align: center">No Warranty</td>
+        </tr>
+        <tr>
+            <td style="text-align: center">No Guaranty</td>
+        </tr>
+         <tr>
+            <td style="text-align: center">Exchange Period: max 30 days from Purchase date.</td>
+        </tr>
+    </table>
+
+
+
+    </body>
+</html>

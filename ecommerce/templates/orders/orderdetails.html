@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">{{order.billing_profile.email}}</h1>
+      <ul>
+          <li>Name: {{order.shipping_addres.full_name}}</li>
+          <li>Addresss : {{order.shipping_address.get_address}}</li>
+          <li>Addresss : {{order.billing_address.get_address}}</li>
+          <li>Shipping Total : {{order.shipping_total}}</li>
+          <li>Final Total : {{order.finaltotal}}</li>
+          <li>Cart Total : {{order.cart.finaltotal}}</li>
+          <li>Confirm : {{order.confirm}}</li>
+          <form method="POST">
+              {% csrf_token %}
+              <li>{{form}}</li>
+              <button type="submit" class="btn btn-success">Save</button>
+
+          </form>
+
+
+      </ul>
+
+  </div>
+</div>
+{% endblock %}

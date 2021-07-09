@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="jumbotron">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="display-4">Received Contacts</div>
+            </div>
+        </div>
+    </div>
+
+</div>
+    <div class="container">
+        {% for i in contact %}
+
+    <div class="row">
+        <div class="col-sm-5 mx-auto">
+            {{forloop.counter}}
+        <ul>
+        <li>{{i.fullname}}</li>
+        <li>{{i.email}}</li>
+        <li>{{i.content}}</li>
+        </ul>
+         </div>
+    </div>
+        <hr>
+        {% endfor %}
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row">
+    <div class="col-sm-12">
+       <h1> Order Confirm</h1>
+    </div>
+    <div class="col-sm-6 mr-3">
+        {% if aaa %}
+        {{aaa}}
+        {% endif %}
+        <form method="POST">
+            {% csrf_token %}
+            <button class="btn btn-success">Confirm</button>
+
+        </form>
+    </div>
+    <div></div>
+</div>
+{% endblock %}

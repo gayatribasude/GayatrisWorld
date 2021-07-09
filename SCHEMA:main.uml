@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>36a603e6-3392-4aad-807a-09080887e2e8.SCHEMA:main</OriginalElement>
+  <nodes>
+    <node x="1160.087962962963" y="146.0">36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.auth_user</node>
+    <node x="1332.1851851851852" y="468.0">36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.django_admin_log</node>
+    <node x="1106.1851851851852" y="523.0">36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.auth_user_user_permissions</node>
+    <node x="103.29545454545456" y="278.0">36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.orders_billingprofile</node>
+    <node x="1206.5185185185185" y="0.0">36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.django_content_type</node>
+    <node x="931.1851851851852" y="523.0">36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.auth_user_groups</node>
+    <node x="107.13636363636363" y="1134.0">36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.invoices_invoice</node>
+    <node x="223.0" y="1275.0">36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.sqlite_master</node>
+    <node x="461.0" y="490.0">36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.products_product</node>
+    <node x="0.0" y="1275.0">36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.accounts_visitoremail</node>
+    <node x="714.25" y="245.0">36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.auth_group</node>
+    <node x="165.79545454545456" y="0.0">36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.accounts_user</node>
+    <node x="910.7777777777778" y="223.0">36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.auth_permission</node>
+    <node x="0.0" y="512.0">36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.addresses_address</node>
+    <node x="400.79545454545456" y="878.0">36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.carts_cart_products</node>
+    <node x="876.0" y="1275.0">36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.sqlite_sequence</node>
+    <node x="708.0" y="523.0">36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.auth_group_permissions</node>
+    <node x="476.0" y="278.0">36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.products_suppler</node>
+    <node x="96.63636363636363" y="768.0">36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.orders_order</node>
+    <node x="624.0" y="1275.0">36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.django_session</node>
+    <node x="407.0" y="1275.0">36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.django_migrations</node>
+    <node x="263.0" y="523.0">36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.carts_cart</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.auth_group_permissions" target="36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.auth_group">
+      <point x="-47.25" y="-48.0" />
+      <point x="-41.0" y="37.0" />
+    </edge>
+    <edge source="36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.carts_cart_products" target="36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.carts_cart">
+      <point x="-42.0" y="-48.0" />
+      <point x="442.79545454545456" y="743.0" />
+      <point x="396.5" y="743.0" />
+      <point x="44.5" y="81.0" />
+    </edge>
+    <edge source="36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.orders_billingprofile" target="36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.accounts_user">
+      <point x="0.0" y="-81.0" />
+      <point x="192.29545454545456" y="253.0" />
+      <point x="215.04545454545456" y="253.0" />
+      <point x="-49.25" y="114.0" />
+    </edge>
+    <edge source="36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.auth_permission" target="36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.django_content_type">
+      <point x="0.0" y="-59.0" />
+      <point x="1011.7777777777778" y="121.0" />
+      <point x="1255.5185185185185" y="121.0" />
+      <point x="-49.0" y="48.0" />
+    </edge>
+    <edge source="36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.orders_order" target="36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.carts_cart">
+      <point x="86.25" y="-158.0" />
+      <point x="297.8863636363636" y="743.0" />
+      <point x="307.5" y="743.0" />
+      <point x="-44.5" y="81.0" />
+    </edge>
+    <edge source="36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.carts_cart_products" target="36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.products_product">
+      <point x="42.0" y="-48.0" />
+      <point x="526.7954545454545" y="743.0" />
+      <point x="562.0" y="743.0" />
+      <point x="0.0" y="114.0" />
+    </edge>
+    <edge source="36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.django_admin_log" target="36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.django_content_type">
+      <point x="59.0" y="-103.0" />
+      <point x="1509.1851851851852" y="121.0" />
+      <point x="1353.5185185185185" y="121.0" />
+      <point x="49.0" y="48.0" />
+    </edge>
+    <edge source="36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.addresses_address" target="36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.orders_billingprofile">
+      <point x="0.0" y="-92.0" />
+      <point x="121.0" y="465.0" />
+      <point x="147.79545454545456" y="465.0" />
+      <point x="-44.5" y="81.0" />
+    </edge>
+    <edge source="36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.django_admin_log" target="36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.auth_user">
+      <point x="-59.0" y="-103.0" />
+      <point x="1391.1851851851852" y="448.0" />
+      <point x="1326.7546296296296" y="448.0" />
+      <point x="66.66666666666663" y="136.0" />
+    </edge>
+    <edge source="36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.invoices_invoice" target="36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.orders_order">
+      <point x="0.0" y="-48.0" />
+      <point x="0.0" y="158.0" />
+    </edge>
+    <edge source="36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.orders_order" target="36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.addresses_address">
+      <point x="-28.75" y="-158.0" />
+      <point x="182.88636363636363" y="743.0" />
+      <point x="181.5" y="743.0" />
+      <point x="60.5" y="92.0" />
+    </edge>
+    <edge source="36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.auth_user_user_permissions" target="36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.auth_user">
+      <point x="51.5" y="-48.0" />
+      <point x="0.0" y="136.0" />
+    </edge>
+    <edge source="36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.orders_order" target="36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.orders_billingprofile">
+      <point x="28.75" y="-158.0" />
+      <point x="240.38636363636363" y="743.0" />
+      <point x="252.5" y="743.0" />
+      <point x="252.5" y="465.0" />
+      <point x="236.79545454545456" y="465.0" />
+      <point x="44.5" y="81.0" />
+    </edge>
+    <edge source="36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.auth_user_groups" target="36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.auth_user">
+      <point x="38.75" y="-48.0" />
+      <point x="1047.4351851851852" y="448.0" />
+      <point x="1193.4212962962963" y="448.0" />
+      <point x="-66.66666666666663" y="136.0" />
+    </edge>
+    <edge source="36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.auth_user_user_permissions" target="36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.auth_permission">
+      <point x="-51.5" y="-48.0" />
+      <point x="1157.6851851851852" y="438.0" />
+      <point x="1062.2777777777778" y="438.0" />
+      <point x="50.5" y="59.0" />
+    </edge>
+    <edge source="36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.products_product" target="36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.products_suppler">
+      <point x="0.0" y="-114.0" />
+      <point x="0.0" y="81.0" />
+    </edge>
+    <edge source="36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.carts_cart" target="36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.accounts_user">
+      <point x="0.0" y="-81.0" />
+      <point x="352.0" y="253.0" />
+      <point x="313.54545454545456" y="253.0" />
+      <point x="49.25" y="114.0" />
+    </edge>
+    <edge source="36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.auth_user_groups" target="36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.auth_group">
+      <point x="-38.75" y="-48.0" />
+      <point x="969.9351851851852" y="438.0" />
+      <point x="837.25" y="438.0" />
+      <point x="41.0" y="37.0" />
+    </edge>
+    <edge source="36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.auth_group_permissions" target="36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.auth_permission">
+      <point x="47.25" y="-48.0" />
+      <point x="849.75" y="448.0" />
+      <point x="961.2777777777778" y="448.0" />
+      <point x="-50.5" y="59.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.43832752613240417" x="1142.6796502384739" y="697.5" />
+  <SelectedNodes>
+    <node>36a603e6-3392-4aad-807a-09080887e2e8.TABLE:main.accounts_user</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Key columns</Category>
+    <Category>Columns</Category>
+  </Categories>
+</Diagram>
+

@@ -12,16 +12,14 @@ Need info? Check the [Docs](https://docs.google.com/document/d/e/2PACX-1vSukipQg
 - [About](#about)
   - [Stakeholders](#stakeholders)
   - [Technologies](#technologies)
-- [Features](#features)  
+  - [Features](#features)
+- [How To Run](#how-to-run)
 - [Thanks](#thanks)
 
 ## About
-
-
-
 ### Stakeholders
-
-## Features
+### Features
+## How To Run
 
 
 ## Thanks

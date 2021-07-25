@@ -43,7 +43,7 @@ Need info? Check the [Docs](https://docs.google.com/document/d/e/2PACX-1vSukipQg
   - Employee can’t see Graphs.
   - Employee can’t Supplier.
 ## How To Run
-- In Terminal Type these lines
+- In Terminal Type These Lines
 ```
   cd bin
   source activate

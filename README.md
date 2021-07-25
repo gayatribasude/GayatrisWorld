@@ -45,11 +45,11 @@ Need info? Check the [Docs](https://docs.google.com/document/d/e/2PACX-1vSukipQg
 ## How To Run
 - In Mac
 """
-cd bin
-source activate
-cd ..
-cd ecommerce
-python3 manage.py runserver
+  cd bin
+  source activate
+  cd ..
+  cd ecommerce
+  python3 manage.py runserver
 """
 
 

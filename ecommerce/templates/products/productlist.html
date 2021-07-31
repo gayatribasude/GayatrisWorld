@@ -7,12 +7,13 @@
 <div class="row container-fluid" >
 {% for i in product %}
 
-
   <div class="col-lg-4 col-md-6">
     {{forloop.counter}}
-    <div class="card">
+    <div class="card ">
         {% if i.image %}
-      <a href="{% url 'productdetails' i.slug %}"> <img class="img-responsive center" src="{{i.image.url}}" alt="Card image cap" style="height: 445px;width:360px " ></a>
+          <div class="ml-auto mr-auto">
+            <a href="{% url 'productdetails' i.slug %}"> <img class="img-responsive" src="{{i.image.url}}" alt="{{i.name}}" style="height: 445px;width:360px" ></a>
+          </div>
         {% endif %}
       <div class="card-body">
         <h5 class="card-title"><a href="{% url 'productdetails' i.slug %}">{{i.name}}</a></h5>
@@ -24,8 +25,6 @@
         {% if request.user.is_authenticated %}
         <a class="btn btn-dark" href="{% url 'updateproduct' i.slug %}">Update</a>
         {% endif %}
-
-        <!-- <a href="{{product.get_absolute_url }}" class="btn btn-primary">Go somewhere</a> -->
 
       </div>
     </div>

@@ -4,70 +4,58 @@
     var endpoint='/product/analysis/purchase'
     var quantity=[]
     var products=[]
-
+    // ajax() is special method in JQuery to use ajax
+    //ajax has following uses
+    //1. Async, 2. Get Data from Server, 3. Request Data to Server
     $.ajax({
         method:"GET",
-        url:endpoint,
+        url:endpoint, //data is getting renders from this endpoint
         success:function (data) {
-
             products=data.product
             quantity=data.quantity
+            var ctx = document.getElementById("myChart").getContext('2d');
+            var myChart = new Chart(ctx, {
+                type:'horizontalBar',
+                data: {
+                    labels: products,
+                    datasets: [{
+                        label: 'Product Sales',
+                        data: quantity,
+                        fillcolor:"(75,75,66,75",
+
+                        backgroundColor: [
 
 
-
-    var ctx = document.getElementById("myChart").getContext('2d');
-var myChart = new Chart(ctx, {
-    type:'horizontalBar',
-    data: {
-        labels: products,
-        datasets: [{
-            label: 'product sales',
-            data: quantity,
-            fillcolor:"(75,75,66,75",
-
-            backgroundColor: [
+                        ],
+                        borderColor: [
 
 
-            ],
-            borderColor: [
-
-
-            ],
-            borderWidth: 1
-        }]
-    },
-     options: {
-                    scales: {
-                        yAxes: [{
-                            scaleLabel:{
-                            display:true,
-                                labelString:'Product\'s ID'
-                            }}
-                            ],
-                        xAxes:[{
-                            scaleLabel:{
-                                display:true,
-                                labelString:'Number of Item got Sold'
-                            }
-                        }]
-                    },
-    }
-});
-
-
-
-
-
-
-        },
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                 options:{
+                            scales: {
+                                yAxes: [{
+                                    scaleLabel:{
+                                    display:true,
+                                        labelString:'Product\'s ID'
+                                    }}
+                                    ],
+                                xAxes:[{
+                                    scaleLabel:{
+                                        display:true,
+                                        labelString:'Number of items got sold'
+                                    }
+                                }]
+                            },
+                        }
+                    });
+            },
         error:function (error_data) {
             console.log(error_data)
         }
     });
-
-
-
-
 
 </script>
 {% endblock %}
@@ -80,7 +68,7 @@ var myChart = new Chart(ctx, {
     </div>
 
 </div>
-<div class="chart-container" style="position: relative; height:40vh; width:80vw">
+<div class="chart-container ml-auto mr-auto" style="position: relative; height:40vh; width:80vw">
     <canvas id="myChart"></canvas>
 </div>
 

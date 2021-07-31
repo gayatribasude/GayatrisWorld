@@ -1,24 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
 
-
-
-
-
-
-
-
 <div class="container" id="product-section">
   <div class="row">
-
-
-   <div class="col-md-6">
+   <div class="col-md-6 mr-auto ml-auto">
     {% if product.image %}
         <img src="{{product.image.url}}" class="img-fluid"> <br>
     {% endif %}
    </div>
-
-
    <div class="col-md-6">
        <div class="row">
            <div class="col-md-12">
@@ -26,18 +15,14 @@
                <span class="label label-primary">ProductId</span>
                <span class="monospaced">: {{product.slug}}</span>
                <div style="width: 300px" class="description">
-                {{product.description}}
+                  {{product.description}}
                </div>
            </div>
        </div>
        <div class="row">
            <div class="col-md-5 bottom-rule">
                <h2 class="product-price">Rs. {{product.price}}</h2>
-
            </div>
-
-
-
        </div>
        <div class="row">
 
@@ -57,25 +42,26 @@
        <form class='form-product-ajax' method="POST" action="{% url 'updatecart' %}">
                {% csrf_token %}
        <div class="row">
-
            <div class="col-md-12">
-
-                   Quantity:<input type="number" name="quantity" value="1" min="1">
-
+              Quantity:<input type="number" name="quantity" value="1" min="1">
            </div>
        </div>
+      
        <div class="row">
            <div class="col-md-6 py-4">
-
                <input type="hidden" name="productid" value="{{product.id}}">
                <span class="submit-span">
 
-
-                    {% if product in cart.items.product %}
-                    In cart <button type="submit">Remove ?</button>
+                  {% for p in cart.items.all %}
+                    {% if p.product == product %}
+                      In cart <button class="btn btn-dark" type="submit">Remove?</button>
                     {% else %}
-                    Add to cart <button  type="submit">Add ?</button>
+                      Add to cart <button class="btn btn-dark"  type="submit">Add ?</button>
                     {% endif %}
+                  {% empty %}
+                      Add to cart <button class="btn btn-dark"  type="submit">Add ?</button>
+                  {% endfor %}  
+
                </span>
 
                {% if request.user.is_authenticated %}

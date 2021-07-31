@@ -9,12 +9,9 @@ from django.template import RequestContext
 from django.core.mail import EmailMultiAlternatives
 from django.contrib.sites.shortcuts import get_current_site
 from django.urls import reverse
-
-from .forms import LoginForm, VisitorForm, AddressForm,ItemForm
-
+from .forms import VisitorForm, AddressForm,ItemForm
 from .models import Item,Cart
 
-Cart  # ,Item
 Product = apps.get_model('products','Product')
 Order = apps.get_model('orders','Order')
 BillingProfile = apps.get_model('orders','BillingProfile')
@@ -23,41 +20,8 @@ Address=apps.get_model('addresses','Address')
 Invoice=apps.get_model('invoices','Invoice')
 
 
-
-def cartshome(request):
-
-    cart_id = request.session.get("cart_id",None)
-    queryset =Cart.objects.filter(id=cart_id)
-    if queryset.count()==1: # either it will be 0 or 1
-        cart = queryset.first()
-
-
-        if request.user.is_authenticated and cart.user is None:
-            cart.user = request.user
-            cart.save()
-
-        print(cart)
-
-
-    else:
-        cart = Cart.objects.newcart(user=request.user)
-        print(request.user)
-        request.session['cart_id']=cart.id
-
-    #product = cart.products.all()
-    #total = 0
-    #for x in product:
-        #total =total + x.price
-    #print(total)
-    #cart.total =total
-    #cart.save()
-
-    return render(request, "carts/carts.html", {"cart": 'cart','title':'Cart'})
-
-
 def cart_home(request):
     cart, _ =Cart.objects.new_or_get(request)
-    print(cart.items.all())
     return render(request,"carts/carts.html",{"cart":cart,'title':'Cart'})
 
 def updatecart(request):
@@ -80,7 +44,6 @@ def updatecart(request):
     else:
         pass
     if item_object in cart.items.all():
-
         item_object.quantity=0
         item_object.save()
         cart.items.remove(item_object)
@@ -93,8 +56,6 @@ def updatecart(request):
         added = True
     cart.save()
     request.session['cart_items'] = cart.items.count()
-
-
     if request.is_ajax():
         json_data={
             "added":added,
@@ -107,7 +68,7 @@ def updatecart(request):
     #return render(request, "products/productdetails.html", {'item_object': item_object})
 
 def checkout_home(request):
-    current_site = get_current_site(request)
+    current_site = get_current_site(request) #127.0.0.1
     cart, cart_created = Cart.objects.new_or_get(request)
     messages=""
     order=None
@@ -116,13 +77,11 @@ def checkout_home(request):
 
     user=request.user
     billingprofile=None
-    login_form = LoginForm()
     visitor_form=VisitorForm()
     address_form=AddressForm()
     billing_address_form=AddressForm()
     billing_address_id = request.session.get("billing_address_id", None)
     shipping_address_id = request.session.get("shipping_address_id", None)
-
     guest_visitor_id=request.session.get('guest_visitor_id')
 
     if user.is_authenticated:
@@ -138,8 +97,8 @@ def checkout_home(request):
         pass
     address_list=None
     if billingprofile is not None:
-        address_list=Address.objects.filter(billing_profile=billingprofile)
-        print("address_list",address_list)
+        address_list=Address.objects.filter(billing_profile=billingprofile).distinct()
+        print("address_list",type(address_list))
         order_qs=Order.objects.filter(billing_profile=billingprofile,cart=cart,active=True)
         if order_qs.count()==1:
             order=order_qs.first()
@@ -158,11 +117,10 @@ def checkout_home(request):
         if billing_address_id or shipping_address_id:
             order.save()
 
-# yaahaa hunn 1 mark done huaa yaahaa
         if request.method=="POST":
             if guest_visitor_id:
 
-                # yaha main jaana chahiye
+                # Sending the mail of confirmation
                 send_mail(
                 "Confirm Order",
                     'Confirm your order \n- %s/%s/%s click on this link...' % (
@@ -205,7 +163,7 @@ def checkout_home(request):
 
             return redirect("checkout_success")
 
-    return render(request,"carts/checkout.html",{"object":order,"billingprofile":billingprofile,"form":login_form,"visitor_form":visitor_form,"address_form":address_form,"billing_address_form":billing_address_form,"address_list":address_list,"messages":messages,'title':'Checkout'})
+    return render(request,"carts/checkout.html",{"object":order,"billingprofile":billingprofile,"visitor_form":visitor_form,"address_form":address_form,"billing_address_form":billing_address_form,"address_list":address_list,"messages":messages,'title':'Checkout'})
 
 
 
@@ -217,12 +175,8 @@ def checkout_success(request):
     print(get_visitor)
     VisitorEmail.objects.all().update(active=False)
     order_invoice_session=request.session.get('order_invoice')
-
-
     if request.method=="POST":
-
         return redirect("invoice",id=order_invoice_session)
-
     return render(request,'checkout_success.html',{'title':'Successful Checkout'})
 
 
@@ -233,8 +187,6 @@ def confirm_order(request,order_id):
         order=Order.objects.get(id=order_id)
         order.confirm=True
         order.save()
-
-
         return redirect("checkout_home")
     return render(request,"carts/confirm_order.html",{'title':'Confirm Your Order'})
 

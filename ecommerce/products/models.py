@@ -62,13 +62,14 @@ def product_pre_save_receiver(sender, instance, *args, **kwargs):
 
 pre_save.connect(product_pre_save_receiver, sender=Product)
 
-def product_quauntity_at_2(sender,created,instance,*args,**kwargs):
+def product_quauntity_at_2(sender,instance,*args,**kwargs):
     product=Product.objects.get(id=instance.id)
     quantity=product.quantity
     name=product.name
     slug=product.slug
     if quantity == 2 or quantity < 2:
-        message="Product name:"+ name+" Quantity:"+ str(quantity)+" Productslug:"+slug
+        print("Email is getting send to notifying quantity")
+        message="Product name:"+ name+"\nQuantity:"+ str(quantity)+"\nProductslug:"+slug
         emailfrom = settings.EMAIL_HOST_USER
         emaillto = settings.EMAIL_HOST_USER
         send_mail('Quantity Low',
@@ -77,7 +78,4 @@ def product_quauntity_at_2(sender,created,instance,*args,**kwargs):
                   [emaillto],
                   fail_silently=False,
                   )
-
-
-
-#post_save.connect(product_quauntity_at_2,sender=Product)
+post_save.connect(product_quauntity_at_2,sender=Product)

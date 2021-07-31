@@ -1,13 +1,10 @@
 import datetime
 import math
-
 import django
-
 from django.apps import apps
 from django.conf import settings
 from django.db import models
 from django.db.models import Avg, Sum, Count
-
 from django.db.models.signals import post_save, pre_save
 from django.utils import timezone
 
@@ -131,7 +128,7 @@ class Order(models.Model):
         items=self.cart.items.all()
         return items
 
-# yaha maine condition daal di 2
+    #check whether all the required fields got its value or not
     def check_done(self):
         billing_profile=self.billing_profile
         shipping_address=self.shipping_address
@@ -144,6 +141,7 @@ class Order(models.Model):
         else:
             return False
 
+    #update product count in Product table only if order is confirm
     def mark_done(self):
         if self.check_done():
             items=self.cart.items.all()
@@ -160,6 +158,7 @@ class Order(models.Model):
             self.save()
         return self.status
 
+    #update order total with additional costs
     def update_total(self):
         cart_total = self.cart.finaltotal
         shipping_total = self.shipping_total
@@ -203,25 +202,21 @@ def post_save_cart_total(sender, instance, created, *args, **kwargs):
 
 post_save.connect(post_save_cart_total, sender=Cart)
 
-
+#After creating order, update the total (shipping+card_total)
 def post_save_order(sender, instance, created, *args, **kwargs):
-    #print("running")
     if created:
         print("Updating... first")
         instance.update_total()
 
-
 post_save.connect(post_save_order, sender=Order)
 
-
+#It is nothing but the profile of user who places order (whether it is admin,employee or customer)
 class BillingProfile(models.Model):
     user=models.ForeignKey(User,null=True,blank=True,on_delete=models.CASCADE)
     email=models.EmailField()
     active=models.BooleanField(default=True)
     update=models.DateTimeField(auto_now=True)
     timestamp=models.DateTimeField(auto_now_add=True)
-
-
 
     def __str__(self):
         return str(self.id)
@@ -231,5 +226,5 @@ def user_created_receiver(sender,instance,created,*args,**kwargs):
     if created and instance.email:
         BillingProfile.objects.get_or_create(user=instance)
 
-
+#whenever theres a new admin or employee at that time billing profile gets created
 post_save.connect(user_created_receiver,sender=User)

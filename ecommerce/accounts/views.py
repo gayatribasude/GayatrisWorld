@@ -19,44 +19,9 @@ Product=apps.get_model('products','Product')
 # Create your views here.
 def home(request):
     product=Product.objects.all()
-
     img1=Product.objects.get(id=1).image
     img2=Product.objects.get(id=2).image
-
     return render(request,template_name='home.html',context={'title':'Home','img1':img1,'img2':img2,'product':product})
-
-
-
-
-class LoginView(FormView):
-    template_name = 'login.html'
-    form_class = LoginForm
-    success_url = "/"
-
-
-    def form_valid(self,form):
-        request =self.request
-        next_ = request.GET.get('next')
-        next_post = request.POST.get('next')
-        redirect_path = next_ or next_post or None
-
-        email = form.cleaned_data.get('email')
-        password = form.cleaned_data.get('password')
-
-        user = authenticate(request, email=email, password=password)
-        if user is not None:
-            login(request, user)
-
-            try:
-
-                del request.session['guest_email_id']
-            except:
-                pass
-            if is_safe_url(redirect_path,request.get_host()):
-                return redirect(redirect_path)
-            else:
-                return redirect("/")
-        return super(LoginView,self).form_invalid('form')
 
 def logout_view(request):
     logout(request)
@@ -72,7 +37,6 @@ def login_view(request):
         if form.is_valid():
             email = form.cleaned_data.get('email')
             password = form.cleaned_data.get('password')
-
             user = authenticate(request,email=email,password=password)
             if user is not None:
                 login(request,user)
@@ -89,14 +53,11 @@ def login_view(request):
 
 def visitor_view(request):
     form = VisitorForm(request.POST or None)
-    print('yrrhhh')
     next_ =request.GET.get('next')
     next_post = request.POST.get('next')
     redirect_path =next_ or next_post or None
     if form.is_valid():
-
         email =form.cleaned_data.get("email")
-
         new_visitor_email = VisitorEmail.objects.create(email=email)
         request.session['guest_visitor_id'] = new_visitor_email.email
         print("here",new_visitor_email)
@@ -130,8 +91,6 @@ def conatct_page(request):
             message=fullname+" ,"+form.cleaned_data['content']
             emailfrom=form.cleaned_data['email']
             emaillto=settings.EMAIL_HOST_USER
-
-
 
             send_mail(
                 subject,

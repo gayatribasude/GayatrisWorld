@@ -22,13 +22,12 @@ Order=apps.get_model('orders','Order')
 
 
 class ProductListView(ListView):
-    login_url = '/login/'
-    redirect_field_name = 'productlist'
+    # login_url = '/login/'
+    # redirect_field_name = 'productlist'
     template_name = 'products/productlist.html'
     queryset = Product.objects.all() #it returns object_list
     context_object_name = 'product' #object_list =product
     extra_context = {'title':'Product'}
-
     paginate_by = 6
     #ordering = ['-date']
 
@@ -38,8 +37,8 @@ class ProductDetailSlugView(FormMixin,DetailView):
     template_name = 'products/productdetails.html'
     queryset = Product.objects.all() #it returns object
     context_object_name = 'product' # object==product
-    extra_context = {'title':'Product Details'}
 
+    extra_context = {'title':'Product Details'}
     def get_context_data(self, *args, **kwargs):
         request = self.request
         context = super(ProductDetailSlugView,self).get_context_data(**kwargs)
@@ -128,20 +127,19 @@ def product_purchase_analysis(request):
     d = {}
     list_product=[]
     list_quantity=[]
-    for i in order:
-        cart=i.cart
+    for o in order:
+        cart=o.cart
         items=cart.items.all()
         for i in items:
             print(i)
-            products=i.product.slug
-            print(products)
+            product=i.product.slug
+            print(product)
             quantity = i.quantity
             print(quantity)
-            if products in d:
-                old_quantity=d[products]
-                d[products]=old_quantity+quantity
+            if d.get(product) is not None:
+                d[product]+=quantity
             else:
-                d[products]=quantity
+                d[product]=quantity
 
     for i in d:
         list_product.append(i)

@@ -17,7 +17,7 @@ Order=apps.get_model('orders','Order')
 
 class SalesView(LoginRequiredMixin, TemplateView):
     template_name = 'orders/analysis.html'
-
+    #Think of it as a middleman between requests and responses.
     def dispatch(self, *args, **kwargs):
         user = self.request.user
         if not user.is_staff:
@@ -30,17 +30,12 @@ class SalesView(LoginRequiredMixin, TemplateView):
         qs = Order.objects.filter(confirm=True).by_weeks_range(weeks_ago=10, number_of_weeks=10)
         start_date = timezone.now().date() - datetime.timedelta(hours=18)
         context['timezone']=timezone.now().date()
-
         end_date = timezone.now().date() + datetime.timedelta(hours=12)
         today_data = qs.by_range(start_date=start_date, end_date=end_date).get_sales_breakdown()
         context['today'] = today_data
         context['this_week'] = qs.by_weeks_range(weeks_ago=1, number_of_weeks=1).get_sales_breakdown()
         context['last_four_weeks'] = qs.by_weeks_range(weeks_ago=2, number_of_weeks=2).get_sales_breakdown()
-
-
         print(qs.by_weeks_range(weeks_ago=1, number_of_weeks=1).get_sales_breakdown())
-
-
         return context
 
 

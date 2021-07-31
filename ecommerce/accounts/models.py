@@ -49,16 +49,10 @@ class User(AbstractBaseUser):
     def __str__(self):
         return self.email
 
-    def __unicorn__(self):
-        return self.user
-
     def get_full_name(self):
         if self.fullname:
             return self.fullname
         return self.email
-
-    def get_short_name(self):
-        pass
 
     def has_perm(self, perm, obj=None):
         return True
@@ -66,12 +60,9 @@ class User(AbstractBaseUser):
     def has_module_perms(self,app_label):
         return True
 
-    @property
     def is_staff(self):
-
         return self.staff
-
-    @property
+    
     def is_admin(self):
         return self.admin
 

@@ -81,9 +81,9 @@
                             <input type="hidden" name="productid" value="{{item.product.id}}">
                             <span class="submit-span">
         {% if item in cart.items.all %}
-            <button type="submit">Remove ?</button>
+            <button class="btn btn-dark" type="submit">Remove ?</button>
         {% else %}
-            Add to cart <button type="submit">Add ?</button>
+            Add to cart <button class="btn btn-dark" type="submit">Add ?</button>
         {% endif %}
     </span>
 
@@ -97,20 +97,25 @@
 
     </div>
     <hr style="border:2px solid darkgreen ">
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
-            <div class="col-7">
+            <div class="col-5">
 
             </div>
             <div class="col-3">
-                <div class="display-4">Total : {{cart.total}}</div>
+                <h3>Total : {{cart.total}}</h3>
             </div>
              <div class="col-1">
-            <a class="btn btn-success" href="{% url 'productlist' %}">Shop More</a>
-        </div>
+                <a class="btn btn-success" href="{% url 'productlist' %}">Shop More</a>
+            </div>
+            <div class="col-1">
+            </div>
             <div class="col-1">
                 <a class="btn btn-success" href='{% url "checkout_home" %}'>Checkout</a>
             </div>
+            
+        </div>
+            
         </div>
 
     </div>
@@ -123,4 +128,8 @@
 </div>
 
 {% endif %}
+<hr>
+<hr>
+<hr>
+<hr>
 {% endblock %}
